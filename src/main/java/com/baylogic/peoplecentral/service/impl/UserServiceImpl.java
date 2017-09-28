@@ -21,4 +21,9 @@ public class UserServiceImpl implements UserService{
 		{
 			return userDao.isValidUser(username,password);
 		}
+		
+		public boolean createUser(String firstname,String lastname, int id, String email) throws SQLException
+		{
+			return userDao.createUser(firstname,lastname,id,email);
+		}
 }
