@@ -25,6 +25,7 @@ public class UserDaoImpl implements UserDao{
 	  this.dataSource = dataSource;
   }
   
+  //For User Validation
   @Override
   public boolean isValidUser(String username, String password) throws SQLException{
 	  String query = "select count(1) from users where username=? and password=?";
@@ -37,4 +38,24 @@ public class UserDaoImpl implements UserDao{
 	  else 
 		  return false;
   }
+  
+   //For User Creation 
+  public boolean createUser(String firstname,String lastname, int id, String email) throws SQLException
+   {
+	  boolean status;
+	  try{
+	 	 String query = "insert into user(firstname,lastname,id,email) values(?,?,?,?)";
+	 	 PreparedStatement pstmt = dataSource.getConnection().prepareStatement(query);
+	 	 pstmt.setString(1, firstname);
+	 	 pstmt.setString(2, lastname);
+	 	 pstmt.setInt(3, id);
+	 	 pstmt.setString(4, email);
+	 	 pstmt.executeUpdate();
+	 	status = true;
+	  }catch(SQLException e){
+			 e.printStackTrace();
+			 throw new SQLException(e);
+			}
+	  return status;
+	}
 }
